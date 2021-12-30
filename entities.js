@@ -6,11 +6,13 @@ var maxGravitySpeed = 3;
 function Player(x, y) {
   this.x = x;
   this.y = y;
-  this.w = 40;
-  this.h = 40;
+  this.w = 70;
+  this.h = 70;
   this.startX = x;
   this.startY = y;
-  this.speed = 1.2;
+  this.walkingSpeed = 1.5;
+  this.runningSpeed = 3.5;
+  this.speed = this.walkingSpeed;
   this.yVel = 0;
   this.availableJumps = 2;
   this.jumpVel = -5;
@@ -46,8 +48,8 @@ function Player(x, y) {
     var newY = this.y;
 
     // if 's' is down, we are sprinting, so increase the speed
-    if (sDown) this.speed = 2.4;
-    else this.speed = 1.2;
+    if (sDown) this.speed = this.runningSpeed;
+    else this.speed = this.walkingSpeed;
 
     if (leftArrowDown) {
       newX -= this.speed;
@@ -158,25 +160,24 @@ function Player(x, y) {
         spriteY = 163;
       }
       if (this.actionCount >= 44 && this.actionCount < 60) {
-        spriteX = 5;
+        spriteX = 4;
         spriteY = 228;
       }
       if (this.actionCount >= 60) {
-        spriteX = 5;
+        spriteX = 3;
         spriteY = 164;
       }
     }
 
-    data.canvas.drawSprite(
-      this.img,
+    // this is how big of a box to grab from the sprite image (regardless of how big my player object is, these number won't change. For this sprite sheet, I'll always grab a 30x30 box, and then the resulting image will be used to fill up my object, however big that is)
+    const spriteCropW = 30;
+    const spriteCropH = 30;
+    data.canvas.drawEntitySprite(
+      this,
       spriteX,
       spriteY,
-      this.w - 11,
-      this.h - 10,
-      this.x,
-      this.y,
-      this.w,
-      this.h
+      spriteCropW,
+      spriteCropH
     );
 
     if (debugBoundaries) {

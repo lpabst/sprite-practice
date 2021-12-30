@@ -60,27 +60,17 @@ function Canvas(id = "canvas") {
     this.context.fillText(text, x, y + fontSize * 0.8);
   };
 
-  this.drawSprite = function (
-    img,
-    imgX,
-    imgY,
-    imgW,
-    imgH,
-    destX,
-    destY,
-    destW,
-    destH
-  ) {
+  this.drawEntitySprite = function (entity, imgX, imgY, imgW, imgH) {
     this.context.drawImage(
-      img,
+      entity.img,
       imgX,
       imgY,
       imgW,
       imgH,
-      destX,
-      destY,
-      destW,
-      destH
+      entity.x,
+      entity.y,
+      entity.w,
+      entity.h
     );
   };
 }
