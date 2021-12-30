@@ -111,11 +111,14 @@ const game = {
   /***************** EVENT HANDLERS ******************/
 
   handleKeydown: function (e, data) {
+    const keysInUse = [27, 32, 37, 40, 66, 83];
     // get key code and prevent default action for that key
     const key = e.which || e.keyCode || 0;
-    if (key === 27 || key === 32 || (key >= 37 && key <= 40)) {
-      e.preventDefault();
-    }
+    keysInUse.forEach((k) => {
+      if (key === k) {
+        e.preventDefault();
+      }
+    });
 
     // esc key pauses game
     if (key === 27) {
